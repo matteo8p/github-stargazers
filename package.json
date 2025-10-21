@@ -25,7 +25,14 @@
   },
   "homepage": "https://github.com/matteo8p/github-stargazers#readme",
   "devDependencies": {
+    "@types/node-fetch": "^2.6.13",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
-  }
+  },
+  "dependencies": {
+    "commander": "^14.0.1",
+    "node-fetch": "^2.7.0",
+    "picocolors": "^1.1.1"
+  },
+  "bin": "dist/index.js"
 }
