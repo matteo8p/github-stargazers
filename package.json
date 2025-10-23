@@ -33,6 +33,7 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "@mcpjam/sdk": "^0.1.4",
     "commander": "^14.0.1",
     "node-fetch": "^2.7.0",
     "picocolors": "^1.1.1"

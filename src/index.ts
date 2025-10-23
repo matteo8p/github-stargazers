@@ -4,7 +4,6 @@ import fetch, { Response } from 'node-fetch';
 import * as fs from 'fs';
 import * as path from 'path';
 import pc from 'picocolors';
-
 interface CLIOptions {
   gh_token?: string;
   output: string;
@@ -19,6 +18,7 @@ interface StargazerUser {
 interface UserContact {
   username: string;
   name: string | null;
+  company: string | null;
   email: string | null;
   linkedin: string | null;
   x: string | null;
@@ -27,6 +27,7 @@ interface UserContact {
 interface GitHubUser {
   login: string;
   name: string | null;
+  company: string | null;
   email: string | null;
   blog: string | null;
   bio: string | null;
@@ -148,7 +149,7 @@ export async function main(repoArgument: string, options: CLIOptions): Promise<v
   ensureDirectory(path.dirname(outputPath));
   const stream = fs.createWriteStream(outputPath, { encoding: 'utf8' });
   logWrite(`Streaming CSV results to ${pc.bold(outputPath)}`);
-  stream.write('username,name,email,linkedin,x\n');
+  stream.write('username,name,company,email,linkedin,x\n');
 
   let processed = 0;
   let emailsFound = 0;
@@ -281,6 +282,7 @@ async function enrichUser(
   return {
     username,
     name: baseInfo.name || null,
+    company: baseInfo.company || null,
     email,
     linkedin: linkedIn,
     x: twitter,
@@ -373,7 +375,14 @@ function normalizeEmail(email: string | null | undefined): string | null {
 }
 
 function formatCsvRow(contact: UserContact): string {
-  const cells = [contact.username, contact.name, contact.email, contact.linkedin, contact.x];
+  const cells = [
+    contact.username,
+    contact.name,
+    contact.company,
+    contact.email,
+    contact.linkedin,
+    contact.x,
+  ];
   return `${cells.map(csvEscape).join(',')}\n`;
 }
 
